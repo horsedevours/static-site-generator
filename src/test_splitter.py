@@ -10,7 +10,7 @@ class TestSplitter(unittest.TestCase):
         new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
 
         self.assertEqual(
-            [TextNode("This is text with a " , TextType.TEXT), TextNode("`code block`", TextType.CODE), TextNode(" word", TextType.TEXT)],
+            [TextNode("This is text with a " , TextType.TEXT), TextNode("code block", TextType.CODE), TextNode(" word", TextType.TEXT)],
             new_nodes
         )
 
@@ -19,7 +19,7 @@ class TestSplitter(unittest.TestCase):
         new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
 
         self.assertEqual(
-            [TextNode("**Bold**" , TextType.BOLD), TextNode(" this is", TextType.TEXT)],
+            [TextNode("Bold" , TextType.BOLD), TextNode(" this is", TextType.TEXT)],
             new_nodes
         )
     
@@ -31,10 +31,10 @@ class TestSplitter(unittest.TestCase):
         new_nodes = split_nodes_delimiter([node, node2, node3, node4], "_", TextType.ITALIC)
 
         self.assertEqual(
-            [TextNode("This has some ", TextType.TEXT), TextNode("_italic text_", TextType.ITALIC),
-             TextNode("And some ", TextType.TEXT), TextNode("_more italic_", TextType.ITALIC), TextNode(" text", TextType.TEXT),
-             TextNode("_Italic text_", TextType.ITALIC), TextNode(" is everywhere, or hadn't you ", TextType.TEXT), TextNode("_heard?_", TextType.ITALIC),
-             TextNode("_How about some_", TextType.ITALIC), TextNode(" ", TextType.TEXT), TextNode("_back to back_", TextType.ITALIC)],
+            [TextNode("This has some ", TextType.TEXT), TextNode("italic text", TextType.ITALIC),
+             TextNode("And some ", TextType.TEXT), TextNode("more italic", TextType.ITALIC), TextNode(" text", TextType.TEXT),
+             TextNode("Italic text", TextType.ITALIC), TextNode(" is everywhere, or hadn't you ", TextType.TEXT), TextNode("heard?", TextType.ITALIC),
+             TextNode("How about some", TextType.ITALIC), TextNode(" ", TextType.TEXT), TextNode("back to back", TextType.ITALIC)],
              new_nodes
         )
     

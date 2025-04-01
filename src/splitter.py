@@ -23,14 +23,14 @@ def split_text(text, delimiter, text_type):
         i = text.find(delimiter, s)
         if i == 0:
             j = text.find(delimiter, s + len_d)
-            results.append(TextNode(text[s:j+len_d], text_type))
+            results.append(TextNode(text[s+len_d:j], text_type))
             s = j + len_d
         elif i != -1 and not fmted_text:
             results.append(TextNode(text[s:i], TextType.TEXT))
             fmted_text = True
             s = i + 1
         elif i != -1 and fmted_text:
-            results.append(TextNode(text[s-1:i+len_d], text_type))
+            results.append(TextNode(text[s:i], text_type))
             fmted_text = False
             s = i + len_d
         else:
