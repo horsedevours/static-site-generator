@@ -38,3 +38,20 @@ def text_node_to_html_node(text_node):
             return LeafNode("img", "", {"src":text_node.url, "alt": text_node.text})
         case _:
             raise Exception("node does not have an accepted type")
+
+import splitter
+def text_to_textnodes(text):
+    node = TextNode(text, TextType.TEXT)
+
+    results = splitter.split_nodes_bold([node])
+    print(results)
+    results = splitter.split_nodes_code(results)
+    print(results)
+    results = splitter.split_nodes_italic(results)
+    print(results)
+    results = splitter.split_nodes_image(results)
+    print(results)
+    results = splitter.split_nodes_link(results)
+    print(results)
+
+    return results

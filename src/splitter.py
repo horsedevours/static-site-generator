@@ -1,10 +1,19 @@
 from textnode import TextNode, TextType
 from extractor import extract_markdown_images, extract_markdown_links
 
+def split_nodes_bold(old_nodes):
+    return split_nodes_delimiter(old_nodes, "**", TextType.BOLD)
+
+def split_nodes_code(old_nodes):
+    return split_nodes_delimiter(old_nodes, "`", TextType.CODE)
+
+def split_nodes_italic(old_nodes):
+    return split_nodes_delimiter(old_nodes, "_", TextType.ITALIC)
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     results = []
     for node in old_nodes:
-        if text_type == TextType.TEXT:
+        if text_type == TextType.TEXT or node.text_type != TextType.TEXT:
             results.append(node)
         else:
             text = node.text
@@ -31,7 +40,7 @@ def split_text(text, delimiter, text_type):
             fmted_text = True
             s = i + 1
         elif i != -1 and fmted_text:
-            results.append(TextNode(text[s:i], text_type))
+            results.append(TextNode(text[s+len_d-1:i], text_type))
             fmted_text = False
             s = i + len_d
         else:
