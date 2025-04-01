@@ -1,6 +1,6 @@
 import unittest
 
-from splitter import split_nodes_delimiter
+from splitter import split_nodes_delimiter, split_nodes_image, split_nodes_link
 from textnode import TextNode, TextType
 
 class TestSplitter(unittest.TestCase):
@@ -43,3 +43,42 @@ class TestSplitter(unittest.TestCase):
         new_nodes = split_nodes_delimiter([node], None, TextType.TEXT)
 
         self.assertEqual([TextNode("Nothing to see here", TextType.TEXT)], new_nodes)
+    
+    def test_split_images(self):
+        node = TextNode(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png) with some more text",
+            TextType.TEXT,
+        )
+        new_nodes = split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", TextType.TEXT),
+                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode(" and another ", TextType.TEXT),
+                TextNode(
+                    "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
+                ),
+                TextNode(" with some more text", TextType.TEXT)
+            ],
+            new_nodes,
+        )
+    
+    def test_split_links(self):
+        node = TextNode(
+            "This is text with a [link](https://www.groogle.com) and another [second link](https://github.wakka-wakka.com/wiggity-woowoo) with some more text",
+            TextType.TEXT,
+        )
+        new_nodes = split_nodes_link([node])
+        print(new_nodes)
+        self.assertListEqual(
+            [
+                TextNode("This is text with a ", TextType.TEXT),
+                TextNode("link", TextType.LINK, "https://www.groogle.com"),
+                TextNode(" and another ", TextType.TEXT),
+                TextNode(
+                    "second link", TextType.LINK, "https://github.wakka-wakka.com/wiggity-woowoo"
+                ),
+                TextNode(" with some more text", TextType.TEXT)
+            ],
+            new_nodes,
+        )
