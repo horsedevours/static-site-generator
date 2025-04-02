@@ -33,13 +33,14 @@ def is_heading(markdown):
 def is_ordered_list(markdown):
     previous_number = 0
     for line in markdown.splitlines():
-        if not (line[0].isnumeric() and line[1:3] == ". " and int(line[0]) == previous_number + 1):
+        if not (line.strip()[0].isnumeric() and line.strip()[1:3] == ". " and int(line.strip()[0]) == previous_number + 1):
             return False
         else:
-            previous_number = int(line[0])
+            previous_number = int(line.strip()[0])
     return True
 
 def is_quote_block(markdown):
     for line in markdown.splitlines():
         if line[0] != ">":
             return False
+    return True

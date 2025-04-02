@@ -35,3 +35,56 @@ class TestHTMLer(unittest.TestCase):
             html,
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
+    
+    def test_heading(self):
+        md = """
+    #### This is a proper heading
+    """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><h4>This is a proper heading</h4></div>"
+        )
+    
+    def test_ordered_list(self):
+        md = """
+    1. Step one
+    2. Step two [and away](https://www.groogle.com)
+    3. Step three
+    """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ol><li>Step one</li><li>Step two <a href=https://www.groogle.com>and away</a></li><li>Step three</li></ol></div>"
+        )
+
+    def test_quote(self):
+        md = """
+>Axe what you can do for
+>your county.
+    """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><blockquote>Axe what you can do for\nyour county.</blockquote></div>"
+        )
+
+    def test_unordered_list(self):
+        md = """
+- I like dogs
+- I like steak
+- I think about carpeting
+    """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ul><li>I like dogs</li><li>I like steak</li><li>I think about carpeting</li></ul></div>"
+        )

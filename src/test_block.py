@@ -41,7 +41,7 @@ class TestBlock(unittest.TestCase):
     def test_quote(self):
         blockType = block_to_block_type(">I'm quoting the most important things.\n>All for your edification!\n> - John Cowsong")
 
-        self.assertEqual(BlockType.PARAGRAPH, blockType)
+        self.assertEqual(BlockType.QUOTE, blockType)
 
     def test_unordered_list(self):
         blockType = block_to_block_type("- Sometimes I don't fall down\n- I heard a dog and a bird \n - There are many types of birds over there")
