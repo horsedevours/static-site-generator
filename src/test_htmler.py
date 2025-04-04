@@ -88,3 +88,17 @@ class TestHTMLer(unittest.TestCase):
             html,
             "<div><ul><li>I like dogs</li><li>I like steak</li><li>I think about carpeting</li></ul></div>"
         )
+    
+    def test_unordered_list_with_links(self):
+        md = """
+- [Why Glorfindel is More Impressive than Legolas](/blog/glorfindel)
+- [Why Tom Bombadil Was a Mistake](/blog/tom)
+- [The Unparalleled Majesty of "The Lord of the Rings"](/blog/majesty)
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ul><li><a href=/blog/glorfindel>Why Glorfindel is More Impressive than Legolas</a></li><li><a href=/blog/tom>Why Tom Bombadil Was a Mistake</a></li><li><a href=/blog/majesty>The Unparalleled Majesty of \"The Lord of the Rings\"</a></li></ul></div>"
+        )
