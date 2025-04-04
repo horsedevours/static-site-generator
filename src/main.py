@@ -53,8 +53,9 @@ def generate_page(from_path, template_path, dest_path, basepath):
     d.close
 
 def main():
-    basepath = sys.argv[1]   
-    if not basepath:
+    if len(sys.argv) >= 2:
+        basepath = sys.argv[1]   
+    else:
         basepath = "/"
 
     copy_dir_contents("static", "docs")
